@@ -42,13 +42,23 @@ contract PetIdentity {
         petInfo.owner = pet.owner;
         petInfo.healthRecords = pet.healthRecords;
         petInfo.image = pet.image;
-        petInfo.isLost = pet.isLost; //TODO: add to view
+        petInfo.isLost = pet.isLost;
         petInfo.isFound = pet.isFound;
         return petInfo;
     }
 
     function getPetCount() public view returns (uint256) {
         return petsCount;
+    }
+
+    function updatePetInformation(uint256 _id, string memory _name, string memory _breed, uint256 _age, string memory _healthRecords, string memory _image) public {
+        require(pets[_id].owner == msg.sender, "You are not the owner of this pet");
+
+        pets[_id].name = _name;
+        pets[_id].breed = _breed;
+        pets[_id].age = _age;
+        pets[_id].healthRecords = _healthRecords;
+        pets[_id].image = _image;
     }
 
     function transferOwnership(uint256 _id, address _newOwner) public {

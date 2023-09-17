@@ -1,16 +1,23 @@
 <template>
 	<div id="app">
-		<div class="main-head">
-			<h3 class="main-subheading">Total pets in the chain: {{ petCount }} +1</h3>
-			<!-- TODO: animate this number when a new pet is added -->
-		</div>
-
 		<div class="addPet">
 			<h2>Add a pet</h2>
 			<label for="name">Name*: </label>
-			<input type="text" id="petName" name="petName" v-model="petName" /><br /><br />
+			<input
+				type="text"
+				id="petName"
+				name="petName"
+				v-model="petName"
+				placeholder="Enter name"
+			/><br /><br />
 			<label for="breed">Breed*: </label>
-			<input type="text" id="petBreed" name="petBreed" v-model="petBreed" /><br /><br />
+			<input
+				type="text"
+				id="petBreed"
+				name="petBreed"
+				v-model="petBreed"
+				placeholder="Enter breed or mix"
+			/><br /><br />
 			<label for="age">Date of birth*: </label>
 			<input
 				type="text"
@@ -25,6 +32,7 @@
 				id="petHealthRecords"
 				name="petHealthRecords"
 				v-model="petHealthRecords"
+				placeholder="Enter health records"
 			/><br /><br />
 			<label for="image">Image: </label>
 			<input

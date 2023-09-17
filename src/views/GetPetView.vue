@@ -20,7 +20,8 @@
 					<!-- First column content goes here -->
 					<div v-if="getpetImage">
 						<label for="petImage">Image: </label>
-						<a :href="getpetImage" target="_blank">Link</a><br /><br />
+						<!-- <a :href="getpetImage" target="_blank">Link</a><br /><br /> -->
+						<img :src="getpetImage" alt="Your Image" height="280" />
 					</div>
 				</div>
 				<div class="column" style="text-align: left">
@@ -148,17 +149,14 @@ export default {
 				console.log('Pet retrieved successfully!');
 				console.log(pet);
 
-				document.getElementById('petId').style.borderColor = 'black';
+				document.getElementById('petId').style.borderColor = '';
 				document.getElementById('error').innerHTML = '';
 			} catch (error) {
 				// Handle errors, e.g., display an error message
 				console.error('Error getting pet:', error);
-				// make the border red
+
 				document.getElementById('petId').style.borderColor = 'red';
-				// and name is empty show text saying pet ID not found
-				if (this.petId == '') {
-					document.getElementById('error').innerHTML = 'Pet ID not found!';
-				}
+				document.getElementById('error').innerHTML = 'Pet ID not found!';
 			}
 		},
 	},

@@ -46,18 +46,29 @@ export default {
 
 					// Initialize the contract with the signer
 					contract = new ethers.Contract(contractAddress, PetIdentity.abi, signer);
-
-					// Get and set the pet count (you might want to move this to another method)
-					const count = await contract.getPetCount();
-					this.petCount = count.toString();
 				} else {
 					throw new Error(
 						'Ethereum provider not detected. Please install MetaMask or another compatible wallet.'
 					);
 				}
 			} catch (error) {
-				// Handle errors, e.g., display an error message
 				console.error('Error connecting wallet:', error);
+			}
+		},
+
+		async getPetCount() {
+			try {
+				if (!signer || !signer.getAddress()) {
+					throw new Error('Please connect to your Ethereum wallet (e.g., MetaMask).');
+				}
+				contract = new ethers.Contract(contractAddress, PetIdentity.abi, signer);
+
+				const count = await contract.getPetCount();
+
+				// Set the pet count in the data
+				this.petCount = count.toString();
+			} catch (error) {
+				console.error('Error getting pet count:', error);
 			}
 		},
 
@@ -65,15 +76,12 @@ export default {
 			try {
 				const petId = parseInt(this.petId, 10);
 
-				// Ensure signer is connected and has a valid Ethereum address
 				if (!signer || !signer.getAddress()) {
 					throw new Error('Please connect to your Ethereum wallet (e.g., MetaMask).');
 				}
 
-				// Initialize the contract with the signer
 				contract = new ethers.Contract(contractAddress, PetIdentity.abi, signer);
 
-				// Make the contract call to get a pet
 				const pet = await contract.getPet(petId);
 
 				this.getpetName = pet.name;
@@ -88,20 +96,17 @@ export default {
 				console.log('Pet retrieved successfully!');
 				console.log(pet);
 
-				document.getElementById('petId').style.borderColor = 'black';
+				document.getElementById('petId').style.borderColor = 'gray';
 			} catch (error) {
-				// Handle errors, e.g., display an error message
 				console.error('Error getting pet:', error);
-				// make the border red
 				document.getElementById('petId').style.borderColor = 'red';
 			}
 		},
-
-		// create function to list all pets of the user
 	},
 	async mounted() {
 		// Call the connectWallet method to initialize Ethereum connection
 		await this.connectWallet();
+		await this.getPetCount();
 	},
 };
 </script>
